@@ -40,7 +40,7 @@ gulp.task('watch',function(){
 gulp.task('sass',function(){
 	gulp.src('./src/scss/*.scss')
 	.pipe(sass({
-		outputStyle:'compressed',
+		//outputStyle:'compressed',
 		includePaths: ['./node_modules/bootstrap/scss']
 	})
 	.on('error',sass.logError))
@@ -84,6 +84,6 @@ gulp.task('browserify',function(){
 		stream:true
 	}));
 	//.pipe(notify({ message: 'browserify task complete' }));
-	
+
 })
 gulp.task('default', ['server','watch','browserify']);
