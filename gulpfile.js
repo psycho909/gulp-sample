@@ -40,7 +40,7 @@ gulp.task('watch',function(){
 gulp.task('sass',function(){
 	gulp.src('./src/scss/*.scss')
 	.pipe(sass({
-		//outputStyle:'compressed',
+		outputStyle:'compressed',
 		includePaths: ['./node_modules/bootstrap/scss']
 	})
 	.on('error',sass.logError))
