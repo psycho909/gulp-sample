@@ -40,7 +40,10 @@ gulp.task('watch',function(){
 gulp.task('sass',function(){
 	gulp.src('./src/scss/*.scss')
 	.pipe(sass({
-		outputStyle:'compressed',
+		// 壓縮模式
+		// outputStyle:'compressed',
+		// 普通模式
+		outputStyle:'expanded',
 		includePaths: ['./node_modules/bootstrap/scss']
 	})
 	.on('error',sass.logError))
