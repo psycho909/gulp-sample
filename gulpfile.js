@@ -5,9 +5,10 @@ var gulp=require('gulp'),
 	babelify=require('babelify'),
 	babel=require('gulp-babel'),
 	spritesmith = require('gulp.spritesmith'),
-	autoprefixer=require('gulp-autoprefixer'),
+	autoprefixer=require('autoprefixer'),
 	browserify=require('browserify'),
 	sourcemaps=require('gulp-sourcemaps'),
+	postcss=require('gulp-postcss'),
 	source=require('vinyl-source-stream'),
 	buffer=require('vinyl-buffer'),
 	stringify=require('stringify'),
@@ -40,21 +41,34 @@ gulp.task('watch',function(){
 gulp.task('sass',function(){
 	gulp.src('./src/scss/*.scss')
 	.pipe(sass({
-		// 壓縮模式
-		// outputStyle:'compressed',
-		// 普通模式
-		outputStyle:'expanded',
+		outputStyle:'compressed',
 		includePaths: ['./node_modules/bootstrap/scss']
 	})
 	.on('error',sass.logError))
-	.pipe(autoprefixer({
-		browsers:['last 2 versions','> 5%','not ie <= 8']
-	}))
+	.pipe(sourcemaps.init())
+	.pipe(postcss([autoprefixer({
+		browsers :[
+			"> 1%",
+			"last 7 versions",
+			"Firefox >= 45",
+			"ios >= 8",
+			"Safari >= 8",
+			"ie >= 8"
+		]
+	})]))
+	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest('./dist/css'))
 	.pipe(browserSync.reload({
 		stream:true
 	}));
 })
+
+// gulp.task('autoprefixer',function(){
+// 	gulp.src('./dist/css/*.css')
+// 	.pipe(sourcemaps.init())
+// 	.pipe(postcss([autoprefixer()]))
+// 	.pipe(sourcemaps.write('.'))
+// })
 
 // gulp.task('build',function(){
 // 	gulp.src('./src/js/app.js')
