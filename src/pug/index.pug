@@ -1,12 +1,13 @@
+include includes/config.pug
+
 doctype html
 html(lang="zh-Hant-TW")
-    head
-        meta(charset="utf-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible" content="ie=edge")
-        title Pug
-        link(rel="stylesheet", href="./css/index.css")
+    include includes/head.pug
     body
-        h1#box 123
+    
+        h1#box H!ss
 
+        
+        
+        include includes/footer.pug
         script(src="./js/app.js")

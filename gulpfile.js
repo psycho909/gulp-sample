@@ -55,6 +55,7 @@ gulp.task('watch',['server','sass','pug'],function(){
 	})
 
 	gulp.watch('./src/pug/*.pug', ['pug']);
+	gulp.watch('./src/pug/includes/*.pug', ['pug']);
 	gulp.watch('./dist/*.html', htmlInjector);
 })
 
