@@ -63,13 +63,6 @@ gulp.task('sass',function(){
 	}));
 })
 
-// gulp.task('autoprefixer',function(){
-// 	gulp.src('./dist/css/*.css')
-// 	.pipe(sourcemaps.init())
-// 	.pipe(postcss([autoprefixer()]))
-// 	.pipe(sourcemaps.write('.'))
-// })
-
 // gulp.task('build',function(){
 // 	gulp.src('./src/js/app.js')
 // 	.pipe(babel({
