@@ -1,7 +1,7 @@
+var htmlInjector = require("bs-html-injector");
 var gulp=require('gulp'),
 	sass=require('gulp-sass'),
 	browserSync=require('browser-sync').create(),
-	notify=require('gulp-notify'),
 	babelify=require('babelify'),
 	babel=require('gulp-babel'),
 	spritesmith = require('gulp.spritesmith'),
@@ -13,7 +13,9 @@ var gulp=require('gulp'),
 	buffer=require('vinyl-buffer'),
 	stringify=require('stringify'),
 	uglify=require('gulp-uglify'),
-	watch=require('gulp-watch');
+	watch=require('gulp-watch'),
+	plumber=require('gulp-plumber'),
+	pug=require('gulp-pug')
 
 gulp.task('sprite', function () {
 	gulp.src('src/images/*.png').pipe(spritesmith({
@@ -25,30 +27,35 @@ gulp.task('sprite', function () {
 });
 
 gulp.task('server', ['sass'], function() {
-	console.log('SASS')
+	console.log('server')
+	browserSync.use(htmlInjector,{
+		files:'./dist/*.html'
+	})
     browserSync.init({
         server: "./dist/"
-    });
+	});
 });
 
-gulp.task('watch',function(){
+gulp.task('watch',['server','sass','pug'],function(){
+
+	watch('./dist/*.html').on('add',function(){
+		console.log("add html")
+		browserSync.reload("*.html")
+	})
+
 	watch('./src/scss/*.scss').on('change',function(){
 		console.log("change sass")
 		gulp.start('sass');
 	})
+
 	watch('./src/js/*.js').on('change',function(){
 		console.log("change js")
 		gulp.start('browserify');
 		browserSync.reload()
 	})
-	watch('./dist/*.html').on('add',function(){
-		console.log("add html")
-		browserSync.reload("*.html")
-	})
-	watch('./dist/*.html').on('change',function(){
-		console.log("change html")
-		browserSync.reload("*.html")
-	})
+
+	gulp.watch('./src/pug/*.pug', ['pug']);
+	gulp.watch('./dist/*.html', htmlInjector);
 })
 
 gulp.task('sass',function(){
@@ -76,6 +83,17 @@ gulp.task('sass',function(){
 	}));
 })
 
+gulp.task("pug",function(){
+	console.log("pug:compile")
+	gulp.src('./src/pug/*.pug')
+	.pipe(plumber())
+	.pipe(pug({
+		pretty:true
+	}))
+	.pipe(gulp.dest('./dist/'))
+	.pipe(browserSync.reload({stream: true}))
+})
+
 // gulp.task('build',function(){
 // 	gulp.src('./src/js/app.js')
 // 	.pipe(babel({
@@ -85,6 +103,7 @@ gulp.task('sass',function(){
 // 	.pipe(gulp.dest('./dist/js'))
 // 	.pipe(browserSync.stream());
 // })
+
 gulp.task('browserify',function(){
 	console.log("browserify")
 	browserify({
@@ -107,7 +126,6 @@ gulp.task('browserify',function(){
 	.pipe(browserSync.reload({
 		stream:true
 	}));
-	//.pipe(notify({ message: 'browserify task complete' }));
 
 })
-gulp.task('default', ['server','watch','browserify']);
+gulp.task('default', ['server','watch','browserify','pug']);

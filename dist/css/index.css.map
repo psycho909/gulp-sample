@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,EAAE,UAAU,QAAQ,CAAC,KAAK,mBAAmB,CAAC,MAAM,UAAU,CAAC,KAAK,oBAAa,AAAb,qBAAa,AAAb,oBAAa,AAAb,aAAa,qBAAqB,YAAY,aAAa,iBAAiB,CAAC","file":"index.css","sourcesContent":["*{padding:0;margin:0}body{font-family:'微軟正黑體'}.text{color:blue}#box{display:flex;background-color:red;width:100px;height:100px;border-radius:50%}\n"]}

@@ -11,12 +11,13 @@
   "devDependencies": {
     "babel-preset-env": "^1.6.0",
     "babelify": "^8.0.0",
-    "browser-sync": "^2.18.8",
+    "browser-sync": "^2.24.6",
     "browserify": "^14.5.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^6.1.2",
-    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-pug": "^4.0.1",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
@@ -29,6 +30,7 @@
   "dependencies": {
     "autoprefixer": "^9.0.1",
     "bootstrap": "^4.0.0-beta.2",
+    "bs-html-injector": "^3.0.3",
     "gulp-postcss": "^7.0.1"
   }
 }
