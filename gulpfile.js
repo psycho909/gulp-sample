@@ -57,13 +57,23 @@ gulp.task('watch',['server','sass','pug'],function(){
 		browserSync.reload("*.html")
 	})
 
+	watch(paths.pug+'*.pug').on('add',function(){
+		console.log("add : pug")
+		gulp.start('pug');
+	})
+
+	watch(paths.pug+'*.pug').on('change',function(){
+		console.log("change : pug")
+		gulp.start('pug');
+	})
+
 	watch(paths.pug+'includes/*.pug').on('add',function(){
-		console.log("add pug")
+		console.log("add includes : pug")
 		gulp.start('pug');
 	})
 
 	watch(paths.pug+'includes/*.pug').on('change',function(){
-		console.log("change pug")
+		console.log("change includes : pug")
 		gulp.start('pug');
 	})
 
