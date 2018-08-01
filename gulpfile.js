@@ -57,6 +57,16 @@ gulp.task('watch',['server','sass','pug'],function(){
 		browserSync.reload("*.html")
 	})
 
+	watch(paths.pug+'includes/*.pug').on('add',function(){
+		console.log("add pug")
+		gulp.start('pug');
+	})
+
+	watch(paths.pug+'includes/*.pug').on('change',function(){
+		console.log("change pug")
+		gulp.start('pug');
+	})
+
 	watch(paths.scss+'*.scss').on('change',function(){
 		console.log("change sass")
 		gulp.start('sass');
@@ -77,7 +87,7 @@ gulp.task('sass',function(){
 	gulp.src(paths.scss+'*.scss')
 	.pipe(sass({
 		outputStyle:'compressed',
-		// includePaths: ['./node_modules/bootstrap/scss']
+		includePaths: ['./node_modules/bootstrap/scss']
 	})
 	.on('error',sass.logError))
 	.pipe(sourcemaps.init())
