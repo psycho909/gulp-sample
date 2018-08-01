@@ -1,7 +1,7 @@
 {
   "name": "20180801",
-  "version": "2.0.0",
-  "description": "ADD PUG,PATH",
+  "version": "2.1.0",
+  "description": "ADD PUG,PATH,updates",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,23 +12,22 @@
     "babel-preset-env": "^1.6.0",
     "babelify": "^8.0.0",
     "browser-sync": "^2.24.6",
-    "browserify": "^14.5.0",
+    "browserify": "^16.2.2",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^7.0.1",
     "gulp-plumber": "^1.2.0",
     "gulp-pug": "^4.0.1",
-    "gulp-sass": "^3.1.0",
+    "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^5.0.1",
     "gulp.spritesmith": "^6.5.1",
     "stringify": "^5.1.0",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
     "autoprefixer": "^9.0.1",
-    "bootstrap": "^4.0.0-beta.2",
     "bs-html-injector": "^3.0.3",
     "gulp-postcss": "^7.0.1"
   }

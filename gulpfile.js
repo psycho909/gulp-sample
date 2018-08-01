@@ -77,7 +77,7 @@ gulp.task('sass',function(){
 	gulp.src(paths.scss+'*.scss')
 	.pipe(sass({
 		outputStyle:'compressed',
-		includePaths: ['./node_modules/bootstrap/scss']
+		// includePaths: ['./node_modules/bootstrap/scss']
 	})
 	.on('error',sass.logError))
 	.pipe(sourcemaps.init())
