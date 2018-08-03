@@ -1,13 +1,7 @@
-include includes/config.pug
+extends includes/layout.pug
 
-doctype html
-html(lang="zh-Hant-TW")
-    include includes/head.pug
-    body
-    
-        h1#box H!ss
+block content
+    h1 Hello
 
-        
-        
-        include includes/footer.pug
-        script(src="./js/app.js")
+block scripts
+    script(src="./js/main/js")
