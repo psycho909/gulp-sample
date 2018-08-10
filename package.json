@@ -31,5 +31,18 @@
     "bootstrap": "^4.0.0-beta.2",
     "bs-html-injector": "^3.0.3",
     "gulp-postcss": "^7.0.1"
-  }
+  },
+  "browserslist": [
+    "last 2 major version",
+    "last 7 versions",
+    ">= 1%",
+    "Chrome >= 45",
+    "Firefox >= 38",
+    "Edge >= 12",
+    "Explorer >= 8",
+    "iOS >= 9",
+    "Safari >= 9",
+    "Android >= 4.4",
+    "Opera >= 30"
+  ]
 }

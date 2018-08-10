@@ -101,16 +101,7 @@ gulp.task('sass',function(){
 	})
 	.on('error',sass.logError))
 	.pipe(sourcemaps.init())
-	.pipe(postcss([autoprefixer({
-		browsers :[
-			"> 1%",
-			"last 7 versions",
-			"Firefox >= 45",
-			"ios >= 8",
-			"Safari >= 8",
-			"ie >= 8"
-		]
-	})]))
+	.pipe(postcss([autoprefixer()]))
 	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest(paths.dist.css))
 	.pipe(browserSync.reload({
@@ -163,4 +154,5 @@ gulp.task('browserify',function(){
 	}));
 
 })
-gulp.task('default', ['server','watch','browserify','pug']);
+gulp.task('default', ['server','watch','pug']);
+gulp.task('gulp_es6', ['server','watch','browserify','pug']);
