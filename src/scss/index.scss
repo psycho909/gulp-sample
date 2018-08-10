@@ -7,11 +7,36 @@
 body{
 	font-family:'微軟正黑體';
 }
+nav,footer,main,figure,article,section{
+	display: block;
+}
+
 #app{
 	width: 100%;
 	overflow: hidden;
 }
+
+#main{
+
+}
+
 footer{
 	padding: 1rem;
 	text-align: center;
+}
+
+@media screen and (max-width:1200px){
+
+}
+@media screen and (max-width:990px){
+	
+}
+@media screen and (max-width:768px){
+	
+}
+@media screen and (max-width:576px){
+	
+}
+@media screen and (max-width:414px){
+	
 }
