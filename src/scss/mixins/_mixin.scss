@@ -1,0 +1,7 @@
+@mixin set-width($width:1200px){
+    width: 100%;
+    max-width: $width;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
