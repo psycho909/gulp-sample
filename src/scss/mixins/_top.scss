@@ -1,0 +1,36 @@
+.to-top {
+    position: fixed;
+    right: 10%;
+    bottom: 10%;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    border: 5px solid #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .5s;
+    opacity: 0;
+    transform: scale(0);
+    z-index: 999;
+	&.active{
+		opacity: 1;
+		transform: scale(1);
+	}
+	.triangle{
+		border-left: 12px solid transparent;
+		border-right: 12px solid transparent;
+		border-bottom: 12px solid #fff;
+		margin-bottom: .55rem;
+	}
+	span{
+		color: #fff;
+		font-size: 1.25rem;
+		font-weight: bold;
+		font-family: Arial, Helvetica, sans-serif;
+		pointer-events: none;
+	}
+}

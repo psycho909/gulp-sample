@@ -29,12 +29,17 @@ html(lang="zh-Hant-TW")
             body
                 #app
                     block content
-
-                .fix-menu
-                    ul
-                        li menu
                 
-                .top top
+                .fix-menu.active
+                    .fix-menu-slogan
+                    ul
+                        each val in fixmenuarr
+                            li= val
+                    .fix-menu-top.top TOP
+                
+                .top.to-top
+                    .triangle
+                    span TOP
 
                 block footer
                     footer.footer #{footer}
