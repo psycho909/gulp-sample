@@ -19,6 +19,7 @@
     "gulp-pug": "^4.0.1",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.4",
+    "gulp-tinypng-nokey": "^1.1.0",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^5.0.1",
     "gulp.spritesmith": "^6.5.1",
@@ -30,7 +31,7 @@
     "autoprefixer": "^9.0.1",
     "bootstrap": "^4.0.0-beta.2",
     "bs-html-injector": "^3.0.3",
-    "gulp-postcss": "^7.0.1"
+    "gulp-postcss": "^7.0.1",
   },
   "browserslist": [
     "last 2 major version",

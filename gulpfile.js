@@ -17,6 +17,8 @@ var gulp=require('gulp'),
 	pug=require('gulp-pug'),
 	htmlInjector = require("bs-html-injector");
 
+var tinypng = require('gulp-tinypng-nokey');
+
 var paths={
 	"scss":"./src/scss/",
 	"css":"./dist/css/",
@@ -30,6 +32,12 @@ var paths={
 		"js":"./dist/js/",
 	}
 }
+
+gulp.task('tinypng',function(){
+	gulp.src('./dist/images/**/*')
+	.pipe(tinypng())
+	.pipe(gulp.dest('./dist/images/'))
+})
 
 gulp.task('sprite', function () {
 	gulp.src(paths.images+'*.png').pipe(spritesmith({
