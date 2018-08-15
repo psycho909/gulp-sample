@@ -31,7 +31,7 @@
     "autoprefixer": "^9.0.1",
     "bootstrap": "^4.0.0-beta.2",
     "bs-html-injector": "^3.0.3",
-    "gulp-postcss": "^7.0.1",
+    "gulp-postcss": "^7.0.1"
   },
   "browserslist": [
     "last 2 major version",
