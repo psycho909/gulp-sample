@@ -18,7 +18,7 @@ html(lang="zh-Hant-TW")
 
         block styles
             link(rel="stylesheet", href="./css/bootstrap-reboot.min.css")
-            link(rel="stylesheet", href="./css/bootstrap-grid.css")
+            link(rel="stylesheet", href="./css/animate.css")
             link(rel="stylesheet", href="./css/index.css?v="+date)
         block plugins
             //- A/B Test
@@ -26,16 +26,18 @@ html(lang="zh-Hant-TW")
             //-     .async-hide { opacity: 0 !important} 
             script(src="./js/ga.js?v="+date)
             script(src="./js/jquery-3.1.1.min.js")
+            script(src="./js/wow.min.js")
             body
                 #app
                     block content
-                
-                nav.fix-menu.active
-                    .fix-menu-slogan
-                    ul
-                        each val in fixmenuarr
-                            li= val
-                    .fix-menu-top.top TOP
+                    
+                if needfixmenu
+                    nav.fix-menu.active
+                        .fix-menu-slogan
+                        ul
+                            each val in fixmenuarr
+                                li= val
+                        .fix-menu-top.top TOP
                 
                 .top.to-top
                     .triangle

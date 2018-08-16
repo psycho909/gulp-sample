@@ -18,6 +18,8 @@ var gulp=require('gulp'),
 	htmlInjector = require("bs-html-injector");
 
 var tinypng = require('gulp-tinypng-nokey');
+var fs = require('fs');
+var data = require('gulp-data');
 
 var paths={
 	"scss":"./src/scss/",
@@ -121,6 +123,9 @@ gulp.task("pug",function(){
 	console.log("pug:compile")
 	gulp.src(paths.pug+'*.pug')
 	.pipe(plumber())
+	.pipe(data(function(tile){
+		return JSON.parse(fs.readFileSync('./src/js/data.json'))
+	}))
 	.pipe(pug({
 		pretty:true
 	}))
