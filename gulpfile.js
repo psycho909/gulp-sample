@@ -20,6 +20,8 @@ var gulp=require('gulp'),
 var tinypng = require('gulp-tinypng-nokey');
 var fs = require('fs');
 var data = require('gulp-data');
+var merge = require('gulp-merge-json');
+var path = require('path');
 
 var paths={
 	"scss":"./src/scss/",
@@ -27,6 +29,7 @@ var paths={
 	"pug":"./src/pug/",
 	"html":"./dist/",
 	"js":"./src/js/",
+	"json":"./src/js/json/",
 	"images":"./src/images/",
 	"dist":{
 		"sprite":"./dist/images/sprite/",
@@ -98,6 +101,20 @@ gulp.task('watch',['server','sass','pug'],function(){
 		browserSync.reload()
 	})
 
+	watch(paths.json+'*.json').on('add',function(){
+		console.log("ADD JSON")
+		gulp.start('json:merge');
+	})
+	watch(paths.json+'*.json').on('change',function(){
+		console.log("MERGE JSON")
+		gulp.start('json:merge');
+	})
+
+	watch(paths.js+'*.json').on('change',function(){
+		console.log("CHANGE JSON")
+		gulp.start('pug');
+		browserSync.reload()
+	})
 	gulp.watch(paths.pug+'*.pug', ['pug']);
 	gulp.watch(paths.pug+'includes/*.pug', ['pug']);
 	gulp.watch(paths.html+'*.html', htmlInjector);
@@ -117,6 +134,25 @@ gulp.task('sass',function(){
 	.pipe(browserSync.reload({
 		stream:true
 	}));
+})
+
+gulp.task('json:merge',function(){
+	return gulp.src("./src/js/json/*.json")
+		.pipe(plumber())
+		.pipe(merge({
+			fileName:"data.json",
+			edit:(json,file)=>{
+				
+				var filename=path.basename(file.path),
+				primaryKey=filename.replace(path.extname(filename),'')
+
+				var data={};
+				data[primaryKey.toUpperCase()]=json;
+
+				return data
+			}
+		}))
+		.pipe(gulp.dest('./src/js'))
 })
 
 gulp.task("pug",function(){
