@@ -22,14 +22,17 @@ var fs = require('fs');
 var data = require('gulp-data');
 var merge = require('gulp-merge-json');
 var path = require('path');
+var ejs = require('gulp-ejs');
+var colors = require('colors');
 
 var paths={
 	"scss":"./src/scss/",
 	"css":"./dist/css/",
 	"pug":"./src/pug/",
+	"ejs":"./src/ejs/",
 	"html":"./dist/",
 	"js":"./src/js/",
-	"json":"./src/js/json/",
+	"json":"./src/data/json/",
 	"images":"./src/images/",
 	"dist":{
 		"sprite":"./dist/images/sprite/",
@@ -39,12 +42,14 @@ var paths={
 }
 
 gulp.task('tinypng',function(){
+	console.log(colors.red('TINYPNG : COMPILE'))
 	gulp.src('./dist/images/**/*')
 	.pipe(tinypng())
 	.pipe(gulp.dest('./dist/images/'))
 })
 
 gulp.task('sprite', function () {
+	console.log(colors.red('SPRITE : COMPILE'))
 	gulp.src(paths.images+'*.png').pipe(spritesmith({
 		imgName: 'sprite.png',
 		cssName: 'sprites.scss',
@@ -54,7 +59,7 @@ gulp.task('sprite', function () {
 });
 
 gulp.task('server', ['sass'], function() {
-	console.log('server')
+	console.log(colors.red('SERVER'))
 	browserSync.use(htmlInjector,{
 		files:paths.html+'*.html'
 	})
@@ -63,64 +68,8 @@ gulp.task('server', ['sass'], function() {
 	});
 });
 
-gulp.task('watch',['server','sass','pug'],function(){
-
-	watch(paths.html+'*.html').on('add',function(){
-		console.log("add html")
-		browserSync.reload("*.html")
-	})
-
-	watch(paths.pug+'*.pug').on('add',function(){
-		console.log("add : pug")
-		gulp.start('pug');
-	})
-
-	watch(paths.pug+'*.pug').on('change',function(){
-		console.log("change : pug")
-		gulp.start('pug');
-	})
-
-	watch(paths.pug+'includes/*.pug').on('add',function(){
-		console.log("add includes : pug")
-		gulp.start('pug');
-	})
-
-	watch(paths.pug+'includes/*.pug').on('change',function(){
-		console.log("change includes : pug")
-		gulp.start('pug');
-	})
-
-	watch(paths.scss+'*.scss').on('change',function(){
-		console.log("change sass")
-		gulp.start('sass');
-	})
-
-	watch(paths.js+'*.js').on('change',function(){
-		console.log("change js")
-		gulp.start('browserify');
-		browserSync.reload()
-	})
-
-	watch(paths.json+'*.json').on('add',function(){
-		console.log("ADD JSON")
-		gulp.start('json:merge');
-	})
-	watch(paths.json+'*.json').on('change',function(){
-		console.log("MERGE JSON")
-		gulp.start('json:merge');
-	})
-
-	watch(paths.js+'*.json').on('change',function(){
-		console.log("CHANGE JSON")
-		gulp.start('pug');
-		browserSync.reload()
-	})
-	gulp.watch(paths.pug+'*.pug', ['pug']);
-	gulp.watch(paths.pug+'includes/*.pug', ['pug']);
-	gulp.watch(paths.html+'*.html', htmlInjector);
-})
-
 gulp.task('sass',function(){
+	console.log(colors.red('SASS'))
 	gulp.src(paths.scss+'*.scss')
 	.pipe(sass({
 		outputStyle:'compressed',
@@ -137,7 +86,8 @@ gulp.task('sass',function(){
 })
 
 gulp.task('json:merge',function(){
-	return gulp.src("./src/js/json/*.json")
+	console.log(colors.red('JSON : MERGE'))
+	return gulp.src("./src/data/json/*.json")
 		.pipe(plumber())
 		.pipe(merge({
 			fileName:"data.json",
@@ -152,15 +102,28 @@ gulp.task('json:merge',function(){
 				return data
 			}
 		}))
-		.pipe(gulp.dest('./src/js'))
+		.pipe(gulp.dest('./src/data'))
 })
 
+// EJS
+gulp.task('ejs',function(){
+	console.log(colors.red("EJS : COMPILE"))
+	gulp.src('./src/ejs/*.ejs')
+		.pipe(plumber())
+		.pipe(data(function(file){
+			return JSON.parse(fs.readFileSync('./src/data/data.json'))
+		}))
+		.pipe(ejs({},{},{ext:".html"}))
+		.pipe(gulp.dest('./dist'))
+})
+
+// PUG
 gulp.task("pug",function(){
-	console.log("pug:compile")
+	console.log(colors.red("PUG : COMPILE"))
 	gulp.src(paths.pug+'*.pug')
 	.pipe(plumber())
-	.pipe(data(function(tile){
-		return JSON.parse(fs.readFileSync('./src/js/data.json'))
+	.pipe(data(function(file){
+		return JSON.parse(fs.readFileSync('./src/data/data.json'))
 	}))
 	.pipe(pug({
 		pretty:true
@@ -180,7 +143,7 @@ gulp.task("pug",function(){
 // })
 
 gulp.task('browserify',function(){
-	console.log("browserify")
+	console.log(colors.red("ES6 : Browserify"))
 	browserify({
 		entries:[paths.js+'app.js'],
 		debug:true
@@ -203,5 +166,96 @@ gulp.task('browserify',function(){
 	}));
 
 })
-gulp.task('default', ['server','watch','pug']);
-gulp.task('gulp_es6', ['server','watch','browserify','pug']);
+gulp.task('watch',['server','sass'],function(){
+	watch(paths.html+'*.html').on('add',function(){
+		console.log("add html")
+		browserSync.reload("*.html")
+	})
+	watch(paths.scss+'*.scss').on('change',function(){
+		console.log("change sass")
+		gulp.start('sass');
+	})
+
+	watch(paths.js+'*.js').on('change',function(){
+		console.log("change js")
+		gulp.start('browserify');
+		browserSync.reload()
+	})
+
+	gulp.watch(paths.html+'*.html', htmlInjector);
+})
+gulp.task('watch_ejs',['ejs'],function(){
+	watch(paths.ejs+'*.ejs').on('add',function(){
+		console.log(colors.yellow("ADD : ejs"))
+		gulp.start('ejs');
+	})
+
+	watch(paths.ejs+'*.ejs').on('change',function(){
+		console.log(colors.yellow("CHANGE : ejs"))
+		gulp.start('ejs');
+	})
+
+	watch(paths.ejs+'includes/*.ejs').on('add',function(){
+		console.log(colors.yellow("ADD INCLUDES : ejs"))
+		gulp.start('ejs');
+	})
+
+	watch(paths.ejs+'includes/*.ejs').on('change',function(){
+		console.log(colors.yellow("CHANGE INCLUDES : ejs"))
+		gulp.start('ejs');
+	})
+
+	watch(paths.json+'*.json').on('add',function(){
+		console.log(colors.yellow("ADD JSON"))
+		gulp.start('json:merge');
+	})
+	watch(paths.json+'*.json').on('change',function(){
+		console.log(colors.yellow("MERGE JSON"))
+		gulp.start('json:merge');
+		gulp.start('ejs');
+		browserSync.reload()
+	})
+
+	gulp.watch(paths.ejs+'*.ejs', ['ejs']);
+	gulp.watch(paths.ejs+'includes/*.ejs', ['ejs']);
+})
+gulp.task('watch_pug',['pug'],function(){
+	watch(paths.pug+'*.pug').on('add',function(){
+		console.log(colors.yellow("ADD : pug"))
+		gulp.start('pug');
+	})
+
+	watch(paths.pug+'*.pug').on('change',function(){
+		console.log(colors.yellow("CHANGE : pug"))
+		gulp.start('pug');
+	})
+
+	watch(paths.pug+'includes/*.pug').on('add',function(){
+		console.log(colors.yellow("ADD INCLUDES : pug"))
+		gulp.start('pug');
+	})
+
+	watch(paths.pug+'includes/*.pug').on('change',function(){
+		console.log(colors.yellow("CHANGE INCLUDES : pug"))
+		gulp.start('pug');
+	})
+
+	watch(paths.json+'*.json').on('add',function(){
+		console.log(colors.yellow("ADD JSON"))
+		gulp.start('json:merge');
+	})
+	watch(paths.json+'*.json').on('change',function(){
+		console.log(colors.yellow("MERGE JSON"))
+		gulp.start('json:merge');
+		gulp.start('pug');
+		browserSync.reload()
+	})
+
+	gulp.watch(paths.pug+'*.pug', ['pug']);
+	gulp.watch(paths.pug+'includes/*.pug', ['pug']);
+})
+
+gulp.task('default', ['server','watch']);
+gulp.task('gulp_es6', ['server','watch','browserify']);
+gulp.task('gulp_ejs', ['server','watch','watch_ejs','json:merge']);
+gulp.task('gulp_pug', ['server','watch','watch_pug','json:merge']);

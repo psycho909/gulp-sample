@@ -1,4 +1,5 @@
-include config.pug
+- var needfixmenu=false;
+- var date=Date.now();
 
 doctype html
 html(lang="zh-Hant-TW")
@@ -7,12 +8,12 @@ html(lang="zh-Hant-TW")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible" content="ie=edge")
         
-        meta(name="description" content=description)
-        meta(name="keywords" CONTENT=keywords )
-        meta(property="og:url"  content=og_url)
-        meta(property="og:type" content=og_type)
-        meta(property="og:title" content=title)
-        meta(property="og:description" content=description)
+        meta(name="description" content=CONFIG.description)
+        meta(name="keywords" CONTENT=CONFIG.keywords )
+        meta(property="og:url"  content=CONFIG.og_url)
+        meta(property="og:type" content=CONFIG.og_type)
+        meta(property="og:title" content=CONFIG.title)
+        meta(property="og:description" content=CONFIG.description)
 
         title #{title}
 
@@ -30,7 +31,7 @@ html(lang="zh-Hant-TW")
             body
                 #app
                     block content
-                    
+                
                 if needfixmenu
                     nav.fix-menu.active
                         .fix-menu-slogan
