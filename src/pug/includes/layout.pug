@@ -25,7 +25,13 @@ html(lang="zh-Hant-TW")
             //- A/B Test
             //- style
             //-     .async-hide { opacity: 0 !important} 
-            script(src="./js/ga.js?v="+date)
+            script(src="https://www.googletagmanager.com/gtag/js?id=UA-123392816-1",async)
+            script.
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'UA-123392816-1');
+
             script(src="./js/jquery-3.1.1.min.js")
             script(src="./js/wow.min.js")
             body
