@@ -6,9 +6,11 @@
 
 #app{
 	width: 100%;
+	max-width: 1200px;
 	overflow: hidden;
 	height: 600px;
-	background-color: antiquewhite;
+	display: flex;
+	background-color: rgb(173, 173, 173);
 }
 header{
 	@include set-width();
