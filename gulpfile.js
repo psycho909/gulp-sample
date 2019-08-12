@@ -225,9 +225,19 @@ function browserifyJS(){
 	}));
 }
 
+function js(){
+	console.log(colors.red('JS'))
+	return src(paths.js+'app.js')
+		.pipe(babel({
+			presets:["@babel/preset-env"]
+		}))
+		.pipe(dest(paths.dist.js))
+}
+
+
 exports.sprite=sprite;
 exports.tinypng=tinypngImg;
-exports.js=browserifyJS;
+exports.js=js;
 exports.sass=sassToCss;
 exports.pug=pugToHtml;
 exports.ejs=ejsToHtml;
