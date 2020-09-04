@@ -29,7 +29,7 @@
     "gulp-tinypng-nokey": "^1.1.0",
     "gulp-uglify": "^3.0.2",
     "gulp.spritesmith": "^6.10.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "stringify": "^5.2.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^1.1.2"
